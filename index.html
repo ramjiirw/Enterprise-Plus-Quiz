@@ -157,7 +157,6 @@ button {
 </div>
 
 <div class="content" id="quiz" style="display:none;"></div>
-
 <div class="results" id="results"></div>
 
 </div>
@@ -185,55 +184,49 @@ const quizData = [
       "The email body contains HTML"
     ],
     correct:2,
-    explanation:"The LIKE('%@%') condition filters out records that do not contain an email-style value."
+    explanation:"The LIKE('%@%') condition filters out records that do not contain an email-style value. If no records meet this condition, no emails will be sent."
   },
   {
     question:"Where is automatic email activity stored for reporting?",
     options:["EMAIL_LOG","CoreComms output","AETASK","User mailbox"],
     correct:2,
-    explanation:"Auto email activity is recorded in the AETASK table."
+    explanation:"Auto email activity is recorded in the AETASK table, which allows activity to be reported on and audited after the email process has run."
   },
   {
     question:"Auto email code runs at the Inspections level and retrieves three inspections. What happens?",
     options:["One email is sent","Two emails are sent","Three separate emails are sent","No emails are sent"],
     correct:2,
-    explanation:"Code runs once per inspection record."
+    explanation:"Code runs once per inspection record, resulting in separate emails."
   },
   {
     question:"Which C# data type is used to store text in auto email code?",
     options:["Integer","Boolean","Array","String"],
     correct:3,
-    explanation:"Strings are used to store text values."
+    explanation:"Strings are used to store text values such as names and addresses."
   },
   {
     question:"An auto email checks AETASK using TASKDEFID and finds a match. What happens?",
     options:["The email is sent again","A duplicate email is sent","The process errors","The email is not sent again"],
     correct:3,
-    explanation:"TASKDEFID prevents duplicates."
+    explanation:"TASKDEFID prevents the same email being sent more than once for the same case."
   },
-   {
+  {
     question:"Which HTML tag creates paragraphs in an email body?",
     options:["&lt;div&gt;","&lt;strong&gt;","&lt;em&gt;","&lt;p&gt;"],
     correct:3,
-    explanation:"The <p> tag is used to separate text into paragraphs. This improves readability in HTML emails, especially when displaying longer content."
+    explanation:"The <p> tag is used to separate text into paragraphs. This improves readability in HTML emails."
   },
   {
     question:"In an HTML email, what does the &lt;strong&gt; tag do to text?",
     options:["Italicises text","Underlines text","Makes text bold and denotes importance","Hides text"],
     correct:2,
-    explanation:"The <strong> tag is used to indicate that text is important. Most email clients display this as bold so key information stands out."
-  },
-  {
-    question:"In an HTML email, what does the <strong> tag do?",
-    options:["Italicises text","Underlines text","Makes text bold","Hides text"],
-    correct:2,
-    explanation:"<strong> makes text bold."
+    explanation:"The <strong> tag indicates importance and is usually displayed as bold."
   },
   {
     question:"Which CoreComms feature allows working-day calculations?",
     options:["Query Builder","Output settings","Field naming","Calculated Fields"],
     correct:3,
-    explanation:"Calculated Fields allow derived values."
+    explanation:"Calculated Fields allow derived values, such as working-day calculations."
   },
   {
     question:"A CoreComms report previews but does not email. What should you check first?",
@@ -250,25 +243,25 @@ const quizData = [
       "Continuously, every X minutes, fixed times, fixed dates"
     ],
     correct:3,
-    explanation:"Core Services supports multiple schedule types."
+    explanation:"Core Services supports continuous, interval-based, and fixed scheduling."
   },
   {
     question:"Month blank, Day 1 and 15, Hour 7. When does it run?",
     options:["1 Jan and 15 Jan only","Every day at 7am","1st and 15th of every month at 7am","Manually only"],
     correct:2,
-    explanation:"Blank month = every month."
+    explanation:"A blank month acts as a wildcard, so the task runs every month."
   },
   {
     question:"What does the Job Status Key show?",
     options:["Database connections","User permissions","System performance","Meaning of task status icons"],
     correct:3,
-    explanation:"It explains task status icons."
+    explanation:"The Job Status Key explains what each status icon represents."
   },
   {
     question:"A task shows an error icon. What does this mean?",
     options:["Task disabled","Task not run","Task successful","Task ran but failed"],
     correct:3,
-    explanation:"An error icon indicates failure."
+    explanation:"An error icon indicates the task attempted to run but failed."
   }
 ];
 
@@ -357,7 +350,8 @@ function showResults(){
       </div>
 
       <p style="margin-bottom:16px;">
-        This score is intended to help reinforce your understanding of the topics covered during the training.
+        This score is intended to help reinforce your understanding of the topics covered during the training,
+        and to highlight any areas that may benefit from further review.
       </p>
 
       <p style="margin-bottom:24px;">
@@ -368,7 +362,7 @@ function showResults(){
         Thank you for attending Idox training
       </p>
 
-      <p>
+      <p style="margin-bottom:0;">
         If you’d like to explore further training courses, please speak to your Idox account manager.
       </p>
     </div>
