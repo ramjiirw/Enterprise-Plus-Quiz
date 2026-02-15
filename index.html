@@ -167,155 +167,155 @@ const quizData = [
   {
     question:"In Enterprise auto emails, what is the main purpose of a sweep clause?",
     options:[
-      "To make sure only records with a valid email address and the right conditions are included",
       "To record the email in the system after it is sent",
-      "To format the content of the email",
-      "To control when the email schedule runs"
+      "To control when the email schedule runs",
+      "To make sure only records with a valid email address and the right conditions are included",
+      "To format the content of the email"
     ],
-    correct:0,
+    correct:2,
     explanation:"A sweep clause acts as a safety filter. It ensures only records that meet specific conditions, such as having a valid email address and correct contact type, are picked up. Without it, the task may attempt to send emails to blank or invalid recipients and fail."
   },
   {
     question:"An auto email runs, but no emails are sent. The sweep clause includes LIKE('%@%'). Why?",
     options:[
-      "No valid email address was found",
-      "The task definition ID has not been set",
       "The email server is unavailable",
-      "The email body contains HTML"
+      "No valid email address was found",
+      "The email body contains HTML",
+      "The task definition ID has not been set"
     ],
-    correct:0,
+    correct:1,
     explanation:"LIKE('%@%') checks that the email field contains an @ symbol, acting as a basic validity check. If no records meet that condition, the sweep clause returns nothing, so the task runs but no emails are triggered."
   },
   {
     question:"Where is automatic email activity stored for reporting?",
     options:[
-      "AETASK table",
       "CoreComms output",
-      "User mailbox",
-      "EMAIL_LOG"
+      "AETASK table",
+      "EMAIL_LOG",
+      "User mailbox"
     ],
-    correct:0,
+    correct:1,
     explanation:"Each auto email creates a record in the AETASK table when it runs. This allows you to audit what was sent, when it was sent, and for which case. It is essential for reporting and tracking activity."
   },
   {
     question:"Auto email code runs at the Inspections level and retrieves three inspections. What happens?",
     options:[
-      "Three separate emails are sent",
       "Two emails are sent",
-      "One email is sent",
-      "No emails are sent"
+      "No emails are sent",
+      "Three separate emails are sent",
+      "One email is sent"
     ],
-    correct:0,
+    correct:2,
     explanation:"When code runs from a lower level table such as Inspections or Actions, it executes once per record returned. If three inspections meet the sweep clause, the email logic runs three times, producing three separate emails."
   },
   {
     question:"Which C# data type is used to store text in auto email code?",
     options:[
+      "Boolean",
       "String",
-      "Array",
       "Integer",
-      "Boolean"
+      "Array"
     ],
-    correct:0,
+    correct:1,
     explanation:"Strings are used to hold and format text such as names, addresses and dates in email content. They also allow you to clean or format values before inserting them into the email body."
   },
   {
     question:"An auto email checks AETASK using TASKDEFID and finds a match. What happens?",
     options:[
-      "The email is not sent again",
       "The process errors",
       "The email is sent again",
+      "The email is not sent again",
       "A duplicate email is sent"
     ],
-    correct:0,
+    correct:2,
     explanation:"The system checks AETASK using TASKDEFID to see whether that specific auto email has already been logged for the case. If a matching record exists, the email is not sent again, preventing duplicate emails."
   },
   {
     question:"Which HTML tag creates paragraphs in an email body?",
     options:[
-      "&lt;p&gt;",
-      "&lt;div&gt;",
       "&lt;em&gt;",
-      "&lt;strong&gt;"
+      "&lt;p&gt;",
+      "&lt;strong&gt;",
+      "&lt;div&gt;"
     ],
-    correct:0,
+    correct:1,
     explanation:"The <p> tag separates text into structured paragraphs. In emails, this improves readability and prevents content appearing as one long block of text."
   },
   {
     question:"In an HTML email, what does the &lt;strong&gt; tag do to text?",
     options:[
-      "Makes text bold and denotes importance",
+      "Hides text",
       "Italicises text",
-      "Underlines text",
-      "Hides text"
+      "Makes text bold and denotes importance",
+      "Underlines text"
     ],
-    correct:0,
+    correct:2,
     explanation:"The <strong> tag highlights important information, typically by displaying it in bold. It helps draw attention to key details such as references, dates or addresses."
   },
   {
     question:"Which CoreComms feature allows working-day calculations?",
     options:[
-      "Calculated Fields",
-      "Output settings",
       "Field naming",
-      "Query Builder"
+      "Calculated Fields",
+      "Query Builder",
+      "Output settings"
     ],
-    correct:0,
+    correct:1,
     explanation:"Calculated Fields allow you to derive new values from existing data, such as calculating working days between two dates. This avoids exporting data elsewhere for manual calculation."
   },
   {
     question:"A CoreComms report previews but does not email. What should you check first?",
     options:[
-      "Output is enabled",
-      "Query returns data",
       "Security tags",
-      "Calculated fields exist"
+      "Calculated fields exist",
+      "Output is enabled",
+      "Query returns data"
     ],
-    correct:0,
+    correct:2,
     explanation:"Previewing only confirms that the query works. For emails to send automatically, the Output section must be configured and the Enabled box ticked. Otherwise the report will not generate email output."
   },
   {
     question:"Which scheduling options exist in Core Services?",
     options:[
-      "Continuously, every X minutes, fixed times, fixed dates",
-      "Manual / automatic",
       "Immediate / delayed",
-      "Daily / weekly"
+      "Continuously, every X minutes, fixed times, fixed dates",
+      "Daily / weekly",
+      "Manual / automatic"
     ],
-    correct:0,
+    correct:1,
     explanation:"Core Services supports multiple scheduling types to suit different automation needs. These include continuous runs, interval based runs, and fixed time or fixed date schedules."
   },
   {
     question:"Month blank, Day 1 and 15, Hour 7. When does it run?",
     options:[
-      "1st and 15th of every month at 7am",
       "Every day at 7am",
-      "1 Jan and 15 Jan only",
-      "Manually only"
+      "1st and 15th of every month at 7am",
+      "Manually only",
+      "1 Jan and 15 Jan only"
     ],
-    correct:0,
+    correct:1,
     explanation:"Leaving Month blank acts as a wildcard, meaning every month. Combined with Day 1 and 15 and Hour 7, the task runs at 7am on the 1st and 15th of every month."
   },
   {
     question:"What does the Job Status Key show?",
     options:[
-      "Meaning of task status icons",
-      "Database connections",
       "System performance",
-      "User permissions"
+      "User permissions",
+      "Meaning of task status icons",
+      "Database connections"
     ],
-    correct:0,
+    correct:2,
     explanation:"The Job Status Key explains what each service icon represents, such as running, successful, or error. It helps you quickly interpret whether scheduled tasks are operating correctly."
   },
   {
     question:"A task shows an error icon. What does this mean?",
     options:[
+      "Task not run",
       "Task ran but failed",
       "Task disabled",
-      "Task successful",
-      "Task not run"
+      "Task successful"
     ],
-    correct:0,
+    correct:1,
     explanation:"An error icon means the task attempted to run but encountered a failure. This usually requires checking logs or configuration settings to identify and resolve the issue."
   }
 ];
