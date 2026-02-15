@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Plus – Knowledge Check</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    min-height: 100vh;
+    padding: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff;
+    padding: 28px;
+    text-align: center;
+}
+header h1 { font-size: 1.8em; margin-bottom: 8px; }
+header p { opacity: 0.9; }
+
+.progress {
+    height: 8px;
+    background: #ddd;
+    margin: 20px 30px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    transition: width 0.3s;
+}
+
+.content { padding: 30px; }
+
+.question-number {
+    color: #2a5298;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.question {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 20px;
+}
+.option {
+    background: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.option:hover {
+    background: #e8f0ff;
+    border-color: #2a5298;
+}
+.option.correct { background: #4caf50; color: #fff; }
+.option.incorrect { background: #f44336; color: #fff; }
+.option.disabled { pointer-events: none; opacity: 0.85; }
+
+.feedback {
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 8px;
+    display: none;
+}
+.feedback.correct { background: #e8f5e9; color: #2e7d32; }
+.feedback.incorrect { background: #ffebee; color: #c62828; }
+
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+button {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-primary { background: #2a5298; color: #fff; }
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+.btn-secondary { background: #777; color: #fff; }
+
+.results {
+    display: none;
+    padding: 40px;
+    text-align: center;
+}
+.score {
+    font-size: 3em;
+    font-weight: bold;
+    color: #2a5298;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<header>
+  <h1>Enterprise Plus – Knowledge Check</h1>
+  <p>Idox Training</p>
+</header>
+
+<div class="progress">
+  <div class="progress-fill" id="progressFill"></div>
+</div>
+
+<!-- INTRO -->
+<div class="content" id="intro">
+  <h2 style="color:#1e3c72;margin-bottom:15px;">Enterprise Plus – Knowledge Check</h2>
+
+  <p style="margin-bottom:12px;">
+    You’ve now successfully completed the Enterprise Plus training.
+  </p>
+
+  <p style="margin-bottom:12px;">
+    This short knowledge check helps reinforce the key points covered during the training,
+    including auto emails, CoreComms, and Core Services.
+  </p>
+
+  <p style="margin-bottom:20px;">
+    Choose the answer that best reflects how the system works in practice.
+    You’ll see brief feedback after each question.
+  </p>
+
+  <button class="btn-primary" onclick="startQuiz()">Start knowledge check</button>
+</div>
+
+<!-- QUIZ -->
+<div class="content" id="quiz" style="display:none;"></div>
+
+<!-- RESULTS -->
+<div class="results" id="results"></div>
+</div>
+
+<script>
+const quizData = [
+  {
+    question:"In Enterprise auto emails, what is the main purpose of a sweep clause?",
+    options:[
+      "To control when the email schedule runs",
+      "To format the content of the email",
+      "To make sure only records with a valid email address and the right conditions are included",
+      "To record the email in the system after it is sent"
+    ],
+    correct:2,
+    explanation:"Sweep clauses control which records are picked up by an auto email, commonly ensuring a valid email address exists."
+  },
+  {
+    question:"An auto email runs, but no emails are sent. The sweep clause includes LIKE('%@%'). Why?",
+    options:[
+      "The email server is unavailable",
+      "The task definition ID has not been set",
+      "No valid email address was found",
+      "The email body contains HTML"
+    ],
+    correct:2,
+    explanation:"The LIKE('%@%') condition filters out records that do not contain an email-style value. If no records meet this condition, no emails will be sent."
+  },
+  {
+    question:"Where is automatic email activity stored for reporting?",
+    options:["EMAIL_LOG","CoreComms output","AETASK","User mailbox"],
+    correct:2,
+    explanation:"Auto email activity is recorded in the AETASK table, which allows activity to be reported on and audited after the email process has run."
+  },
+  {
+    question:"Auto email code runs at the Inspections level and retrieves three inspections. What happens?",
+    options:["One email is sent","Two emails are sent","Three separate emails are sent","No emails are sent"],
+    correct:2,
+    explanation:"Code runs once per inspection record, resulting in separate emails."
+  },
+  {
+    question:"Which C# data type is used to store text in auto email code?",
+    options:["Integer","Boolean","Array","String"],
+    correct:3,
+    explanation:"Strings are used to store text values such as names and addresses."
+  },
+  {
+    question:"An auto email checks AETASK using TASKDEFID and finds a match. What happens?",
+    options:["The email is sent again","A duplicate email is sent","The process errors","The email is not sent again"],
+    correct:3,
+    explanation:"TASKDEFID prevents the same email being sent more than once for the same case."
+  },
+  {
+    question:"Which HTML tag creates paragraphs in an email body?",
+    options:["&lt;div&gt;","&lt;strong&gt;","&lt;em&gt;","&lt;p&gt;"],
+    correct:3,
+    explanation:"The <p> tag is used to separate text into paragraphs. This improves readability in HTML emails, especially when displaying longer content."
+  },
+  {
+    question:"In an HTML email, what does the &lt;strong&gt; tag do to text?",
+    options:["Italicises text","Underlines text","Makes text bold and denotes importance","Hides text"],
+    correct:2,
+    explanation:"The <strong> tag is used to indicate that text is important. Most email clients display this as bold so key information stands out."
+  },
+  {
+    question:"Which CoreComms feature allows working-day calculations?",
+    options:["Query Builder","Output settings","Field naming","Calculated Fields"],
+    correct:3,
+    explanation:"Calculated Fields allow you to create derived values, such as working-day calculations, based on existing report data."
+  },
+  {
+    question:"A CoreComms report previews but does not email. What should you check first?",
+    options:["Query returns data","Security tags","Output is enabled","Calculated fields exist"],
+    correct:2,
+    explanation:"Reports only email when output is enabled."
+  },
+  {
+    question:"Which scheduling options exist in Core Services?",
+    options:[
+      "Manual / automatic",
+      "Immediate / delayed",
+      "Daily / weekly",
+      "Continuously, every X minutes, fixed times, fixed dates"
+    ],
+    correct:3,
+    explanation:"Core Services supports continuous, interval-based, and fixed scheduling."
+  },
+  {
+    question:"Month blank, Day 1 and 15, Hour 7. When does it run?",
+    options:["1 Jan and 15 Jan only","Every day at 7am","1st and 15th of every month at 7am","Manually only"],
+    correct:2,
+    explanation:"A blank month acts as a wildcard, so the task runs every month."
+  },
+  {
+    question:"What does the Job Status Key show?",
+    options:["Database connections","User permissions","System performance","Meaning of task status icons"],
+    correct:3,
+    explanation:"The Job Status Key explains what each status icon represents."
+  },
+  {
+    question:"A task shows an error icon. What does this mean?",
+    options:["Task disabled","Task not run","Task successful","Task ran but failed"],
+    correct:3,
+    explanation:"An error icon indicates the task attempted to run but failed."
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function startQuiz(){
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  render();
+}
+
+function render(){
+  const q = quizData[current];
+  const quiz = document.getElementById("quiz");
+
+  quiz.innerHTML = `
+    <div class="question-number">Question ${current+1} of ${quizData.length}</div>
+    <div class="question">${q.question}</div>
+    ${q.options.map((o,i)=>`<div class="option" onclick="selectOption(${i})">${o}</div>`).join("")}
+    <div class="feedback" id="feedback"></div>
+    <div class="buttons">
+      <button class="btn-secondary" onclick="prev()" ${current===0?"disabled":""}>Previous</button>
+      <button class="btn-primary" id="nextBtn" disabled onclick="next()">Next</button>
+    </div>
+  `;
+
+  document.getElementById("progressFill").style.width =
+    ((current+1)/quizData.length*100) + "%";
+}
+
+function selectOption(i){
+  const opts = document.querySelectorAll(".option");
+  const fb = document.getElementById("feedback");
+  opts.forEach(o=>o.classList.add("disabled"));
+
+  if(i === quizData[current].correct){
+    opts[i].classList.add("correct");
+    fb.className = "feedback correct";
+    fb.textContent = "Correct – " + quizData[current].explanation;
+    score++;
+  } else {
+    opts[i].classList.add("incorrect");
+    opts[quizData[current].correct].classList.add("correct");
+    fb.className = "feedback incorrect";
+    fb.textContent = "Incorrect – " + quizData[current].explanation;
+  }
+
+  fb.style.display = "block";
+  document.getElementById("nextBtn").disabled = false;
+}
+
+function next(){
+  if(current < quizData.length - 1){
+    current++;
+    render();
+  } else {
+    showResults();
+  }
+}
+
+function prev(){
+  current--;
+  render();
+}
+
+function showResults(){
+  document.getElementById("quiz").style.display = "none";
+  const r = document.getElementById("results");
+  r.style.display = "block";
+
+  r.innerHTML = `
+    <div style="text-align:left; max-width:600px; margin:0 auto;">
+      <h2 style="margin-bottom:20px;">Knowledge Check Complete</h2>
+
+      <p style="margin-bottom:16px;">You’ve reached the end of the Enterprise Plus training knowledge check.</p>
+
+      <div style="width:100%; text-align:center; margin:24px 0;">
+        <div class="score" style="display:inline-block; text-align:center;">${score} out of ${quizData.length}</div>
+      </div>
+
+      <p style="margin-bottom:16px;">
+        This score is intended to help reinforce your understanding of the topics covered during the training,
+        and to highlight any areas that may benefit from further review.
+      </p>
+
+      <p style="margin-bottom:24px;">
+        If any areas were unclear, you may wish to revisit the relevant sections of the training materials.
+      </p>
+
+      <p style="margin-bottom:10px; font-size:1.6em; font-weight:700; color:#2a5298;">
+        Thank you for attending Idox training.
+      </p>
+
+      <p style="margin-bottom:0;">
+        If you’d like to explore further training courses, please speak to your Idox account manager.
+      </p>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
